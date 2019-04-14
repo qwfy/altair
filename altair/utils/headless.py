@@ -31,9 +31,9 @@ HTML_TEMPLATE = """
 <html>
 <head>
   <title>Embedding Vega-Lite</title>
-  <script src="https://cdn.jsdelivr.net/npm/vega@{vega_version}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@{vegalite_version}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@{vegaembed_version}"></script>
+  <script src="{base_url}/vega@{vega_version}"></script>
+  <script src="{base_url}/vega-lite@{vegalite_version}"></script>
+  <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
 </head>
 <body>
   <div id="vis"></div>
@@ -104,7 +104,8 @@ EXTRACT_CODE = {
 
 def compile_spec(spec, format, mode,
                  vega_version, vegaembed_version, vegalite_version,
-                 scale_factor=1, driver_timeout=20, webdriver='chrome'):
+                 scale_factor=1, driver_timeout=20, webdriver='chrome',
+                 base_url='https://cdn.jsdelivr.net/npm/'):
     # TODO: detect & use local Jupyter caches of JS packages?
 
     # selenium is an optional dependency, so import it here
@@ -140,7 +141,8 @@ def compile_spec(spec, format, mode,
 
     html = HTML_TEMPLATE.format(vega_version=vega_version,
                                 vegalite_version=vegalite_version,
-                                vegaembed_version=vegaembed_version)
+                                vegaembed_version=vegaembed_version,
+                                base_url=base_url)
 
     webdriver_options = webdriver_options_class()
     webdriver_options.add_argument("--headless")

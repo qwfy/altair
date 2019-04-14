@@ -17,7 +17,7 @@ def write_file_or_filename(fp, content, mode='w'):
 def save(chart, fp, vega_version, vegaembed_version,
          format=None, mode=None, vegalite_version=None,
          embed_options=None, json_kwds=None, webdriver='chrome',
-         scale_factor=1):
+         scale_factor=1, base_url='https://cdn.jsdelivr.net/npm/'):
     """Save a chart to file in a variety of formats
 
     Supported formats are [json, html, png, svg]
@@ -51,6 +51,8 @@ def save(chart, fp, vega_version, vegaembed_version,
         Webdriver to use for png or svg output
     scale_factor : float
         scale_factor to use to change size/resolution of png or svg output
+    base_url:
+        base url for loading vega js libraries (when saving as png or svg)
     """
     if json_kwds is None:
         json_kwds = {}
@@ -99,7 +101,8 @@ def save(chart, fp, vega_version, vegaembed_version,
                                         vegalite_version=vegalite_version,
                                         vegaembed_version=vegaembed_version,
                                         webdriver=webdriver,
-                                        scale_factor=scale_factor)
+                                        scale_factor=scale_factor,
+                                        base_url=base_url)
         if format == 'png':
             write_file_or_filename(fp, mimebundle['image/png'], mode='wb')
         else:
